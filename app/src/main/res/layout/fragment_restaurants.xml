@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:orientation="vertical">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@color/primary" android:padding="16dp" android:orientation="vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="All Restaurants" android:textColor="@color/white"
+            android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="12dp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+            android:background="@color/white" android:orientation="horizontal"
+            android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp">
+            <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                android:src="@drawable/ic_search" android:contentDescription="Search"/>
+            <EditText android:id="@+id/et_search" android:layout_width="0dp"
+                android:layout_height="match_parent" android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Search restaurants or cuisine…"
+                android:inputType="text" android:textSize="14sp"
+                android:textColorHint="#ADADAD" android:paddingStart="10dp"
+                android:singleLine="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_restaurants"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:paddingStart="16dp" android:paddingEnd="16dp"
+        android:paddingTop="12dp" android:paddingBottom="80dp" android:clipToPadding="false"/>
+</LinearLayout>

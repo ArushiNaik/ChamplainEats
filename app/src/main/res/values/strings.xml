@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ChamplainEats</string>
+    <string name="home">Home</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="my_orders">Orders</string>
+    <string name="profile">Profile</string>
+    <string name="no_orders">No orders yet.\nTap ＋ to place your first order!</string>
+    <string name="search_hint">Search for food or restaurants…</string>
+    <string name="delivering_to">Delivering to</string>
+    <string name="campus_address">Champlain College, Lennoxville</string>
+    <string name="featured_deals">🎓 Student Deals</string>
+    <string name="popular_near_you">Popular Near You</string>
+    <string name="all_restaurants_title">All Restaurants</string>
+    <string name="open_now">Open Now</string>
+    <string name="mins">min</string>
+    <string name="free_delivery">Free delivery</string>
+</resources>
