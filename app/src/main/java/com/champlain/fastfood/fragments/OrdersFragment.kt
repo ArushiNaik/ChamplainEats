@@ -2,40 +2,46 @@ package com.champlain.fastfood.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.champlain.fastfood.activities.OrderDetailActivity
 import com.champlain.fastfood.activities.PlaceOrderActivity
-import com.champlain.fastfood.adapters.OrderAdapter
 import com.champlain.fastfood.database.DatabaseHelper
-import com.champlain.fastfood.databinding.FragmentOrdersBinding
+import com.champlain.fastfood.models.Order
+import com.champlain.fastfood.ui.screens.MyOrdersScreen
+import com.champlain.fastfood.ui.theme.ChamplainEatsTheme
 
 class OrdersFragment : Fragment() {
-    private var _binding: FragmentOrdersBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var adapter: OrderAdapter
     private lateinit var db: DatabaseHelper
+    private val ordersState = mutableStateListOf<Order>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
-        return binding.root
+        db = DatabaseHelper.getInstance(requireContext())
+        
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ChamplainEatsTheme {
+                    MyOrdersScreen(
+                        orders = ordersState,
+                        onOrderClick = { order ->
+                            startActivity(Intent(requireContext(), OrderDetailActivity::class.java)
+                                .putExtra("order_id", order.id))
+                        },
+                        onNewOrderClick = { showPickRestaurantDialog() }
+                    )
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        db = DatabaseHelper.getInstance(requireContext())
-
-        adapter = OrderAdapter { order ->
-            startActivity(Intent(requireContext(), OrderDetailActivity::class.java)
-                .putExtra("order_id", order.id))
-        }
-        binding.rvOrders.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvOrders.adapter = adapter
         refreshOrders()
-
-        binding.fabNewOrder.setOnClickListener { showPickRestaurantDialog() }
     }
 
     private fun showPickRestaurantDialog() {
@@ -52,11 +58,12 @@ class OrdersFragment : Fragment() {
     }
 
     private fun refreshOrders() {
-        val orders = db.getAllOrders()
-        adapter.submitList(orders)
-        binding.tvEmpty.visibility = if (orders.isEmpty()) View.VISIBLE else View.GONE
+        ordersState.clear()
+        ordersState.addAll(db.getAllOrders())
     }
 
-    override fun onResume() { super.onResume(); refreshOrders() }
-    override fun onDestroyView() { super.onDestroyView(); _binding = null }
+    override fun onResume() {
+        super.onResume()
+        refreshOrders()
+    }
 }

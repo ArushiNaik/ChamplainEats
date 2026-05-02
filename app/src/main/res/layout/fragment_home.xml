@@ -126,19 +126,11 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"/>
 
-            <HorizontalScrollView
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/compose_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_marginBottom="20dp">
-                <LinearLayout
-                    android:id="@+id/chip_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
-            </HorizontalScrollView>
+                android:layout_marginBottom="20dp" />
 
             <!-- Section header -->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
